@@ -1,0 +1,170 @@
+name: slack-inviter
+type: service
+icon: slack
+title: Slack Inviter
+
+labels:
+- slack
+- node
+- inviter
+
+options:
+- version: '1'
+  tag: 26-1.72.0
+  default: true
+
+endpoints:
+- name: slack-inviter
+  main: true
+  ports:
+  - name: http
+    number: 3000
+    protocol: http
+    main: true
+
+env:
+- name: NODE_PORT
+  value: '3000'
+- name: NODE_ENV
+  value: production
+  envType: prod
+- name: NODE_ENV
+  value: development
+  envType: dev
+- name: NODE_ENV
+  value: production
+  envType: staging
+- name: NODE_ENV
+  value: production
+  envType: test
+- name: NODE_ENV
+  value: production
+  envType: feature
+- name: PUBLIC_URL
+  value: '{{service.primaryURL}}'
+- name: TURNSTILE_EXPECTED_HOSTNAME
+  value: '{{service.primaryHost}}'
+- name: TRUST_PROXY
+  value: 'true'
+
+settings:
+- name: slack_team
+  title: Slack workspace
+  description: Workspace subdomain only, for example community from community.slack.com
+  placeholder: community
+  required: true
+  var: SLACK_TEAM
+- name: community_name
+  title: Community name
+  default: Slack Community
+  var: COMMUNITY_NAME
+- name: community_headline
+  title: Community headline
+  default: Meet, share, and solve it together.
+  var: COMMUNITY_HEADLINE
+- name: community_description
+  title: Community description
+  default: Join the community to ask questions, exchange ideas, and connect with people on Slack.
+  var: COMMUNITY_DESCRIPTION
+- name: community_website_url
+  title: Community website URL
+  placeholder: https://example.com
+  var: COMMUNITY_WEBSITE_URL
+- name: community_logo_url
+  title: Community logo URL
+  description: HTTPS or root-relative image URL
+  placeholder: https://example.com/logo.svg
+  var: COMMUNITY_LOGO_URL
+- name: community_support_url
+  title: Support URL
+  placeholder: https://example.com/support
+  var: COMMUNITY_SUPPORT_URL
+- name: community_privacy_url
+  title: Privacy URL
+  placeholder: https://example.com/privacy
+  var: COMMUNITY_PRIVACY_URL
+- name: social_image_url
+  title: Social image URL
+  description: HTTPS or root-relative image URL
+  default: /og.png
+  var: SOCIAL_IMAGE_URL
+- name: rate_limit_ip_max
+  title: Maximum invites per IP
+  default: '10'
+  var: RATE_LIMIT_IP_MAX
+- name: rate_limit_ip_window_seconds
+  title: IP rate-limit window in seconds
+  default: '3600'
+  var: RATE_LIMIT_IP_WINDOW_SECONDS
+- name: rate_limit_email_max
+  title: Maximum invites per email
+  default: '3'
+  var: RATE_LIMIT_EMAIL_MAX
+- name: rate_limit_email_window_seconds
+  title: Email rate-limit window in seconds
+  default: '86400'
+  var: RATE_LIMIT_EMAIL_WINDOW_SECONDS
+
+integrations:
+- name: slack
+  title: Slack
+  type: variable
+  required: true
+  multiple: false
+  labels:
+  - slack
+- name: turnstile
+  title: Cloudflare Turnstile
+  type: variable
+  required: true
+  multiple: false
+  labels:
+  - cloudflare
+  providers:
+  - name: cloudflare
+    env:
+    - name: TURNSTILE_SITE_KEY
+      value: '{{integration.variables.CLOUDFLARE_SITE_KEY}}'
+    - name: TURNSTILE_SECRET_KEY
+      value: '{{integration.variables.CLOUDFLARE_SECRET_KEY}}'
+      secret: true
+
+build:
+  dockerfile: Dockerfile
+  dockerignore: .dockerignore
+  connect: true
+  boilerplates:
+  - name: slack-inviter
+    title: Slack Inviter
+    repo: https://github.com/wodby/slack-inviter
+    branch: main
+    default: true
+
+helm:
+  name: wodby
+  source: oci://registry-1.docker.io/wodby/node
+  chart: oci://registry-1.docker.io/wodby/node
+  version: 0.2.1
+  valueMappings:
+    serviceAccountName: serviceAccount.name
+    serviceAccountCreate: serviceAccount.create
+
+workloads:
+- name: main
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: '{{helm.release}}'
+  kind: deployment
+  primary: true
+  helm:
+    labels: podLabels
+    annotations: podAnnotations
+    volumes: extraVolumes
+  containers:
+  - name: node
+    image: wodby/node
+    build: true
+    helm:
+      resources: resources
+      env: envVars
+      mounts: extraVolumeMounts
