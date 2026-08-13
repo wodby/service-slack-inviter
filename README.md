@@ -27,7 +27,7 @@ build configuration and Wodby CI:
 | --- | --- |
 | Service name | `slack-inviter` |
 | Type | Application service |
-| Base service | [Node.js](https://github.com/wodby/service-node) `1.0.4`, compatible with future `1.x` revisions |
+| Base service | [Node.js](https://github.com/wodby/service-node) `1.0.5`, compatible with future `1.x` revisions |
 | Runtime versions | Node.js 22 and newer options inherited from the Node.js service |
 | Workloads and endpoint | Inherited Node.js deployment and HTTP port 3000 |
 | Service links | Optional database, SMTP, and Redis/Valkey links inherited from Node.js |
