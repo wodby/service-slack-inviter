@@ -130,7 +130,7 @@ build:
   - name: slack-inviter
     title: Slack Inviter
     repo: https://github.com/wodby/slack-inviter
-    branch: main
+    tag: 1.0.1
     default: true
 
 helm:
