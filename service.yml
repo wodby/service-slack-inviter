@@ -107,7 +107,7 @@ settings:
 
 integrations:
 - name: slack
-  title: Slack
+  title: Slack legacy API token
   type: variable
   required: true
   multiple: false
@@ -116,18 +116,11 @@ integrations:
 - name: turnstile
   title: Cloudflare Turnstile
   type: variable
-  required: true
+  required: false
   multiple: false
   labels:
   - cloudflare
-  providers:
-  - name: cloudflare
-    env:
-    - name: TURNSTILE_SITE_KEY
-      value: '{{integration.variables.CLOUDFLARE_SITE_KEY}}'
-    - name: TURNSTILE_SECRET_KEY
-      value: '{{integration.variables.CLOUDFLARE_SECRET_KEY}}'
-      secret: true
+  - turnstile
 
 build:
   dockerfile: Dockerfile

@@ -36,6 +36,19 @@ build configuration and Wodby CI:
 | Helm | chart `oci://registry-1.docker.io/wodby/node`; version `0.2.1` |
 | Configuration and operations | 13 settings, 2 integration slots |
 
+> [!WARNING]
+> This service requires an existing Slackin-compatible legacy administrator API
+> token. Slack no longer issues these tokens, and ordinary Slack app or bot
+> tokens do not work with the legacy invitation endpoint. Use this service only
+> when migrating a working Slackin installation whose token is still active.
+
+The required `Slack legacy API token` integration exports `SLACK_TOKEN`. The
+Slack workspace subdomain is configured separately through the required `Slack
+workspace` setting. Cloudflare Turnstile is optional; enable it by attaching a
+Cloudflare integration with its Turnstile kind selected. That kind exports
+`TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY` directly, and unrelated
+Cloudflare Application Access fields are not exposed to this service.
+
 ## Use this service
 
 Use this service through [Slack Inviter application stack](https://github.com/wodby/stack-slack-inviter), or reference `slack-inviter` from
