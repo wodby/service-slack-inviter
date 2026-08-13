@@ -27,13 +27,12 @@ build configuration and Wodby CI:
 | --- | --- |
 | Service name | `slack-inviter` |
 | Type | Application service |
-| Versions | `1` by default |
-| Workloads | `main` (Deployment, primary) |
-| Containers | `node` using `wodby/node`, build target |
-| Endpoints | `slack-inviter`: HTTP 3000 (main) |
-| Service links | None |
+| Base service | [Node.js](https://github.com/wodby/service-node) `1.0.4`, compatible with future `1.x` revisions |
+| Runtime versions | Node.js 22 and newer options inherited from the Node.js service |
+| Workloads and endpoint | Inherited Node.js deployment and HTTP port 3000 |
+| Service links | Optional database, SMTP, and Redis/Valkey links inherited from Node.js |
 | Application build | Git source connection enabled; Dockerfile: `Dockerfile`; boilerplates: [Slack Inviter](https://github.com/wodby/slack-inviter) |
-| Helm | chart `oci://registry-1.docker.io/wodby/node`; version `0.2.1` |
+| Helm | Inherited from the Node.js service |
 | Configuration and operations | 13 settings, 2 integration slots |
 
 > [!WARNING]

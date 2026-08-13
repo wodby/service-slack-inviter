@@ -1,5 +1,9 @@
 name: slack-inviter
 type: service
+from: node
+fromVersion: "1.0.4"
+fromVersionConstraint: "^1.0.0"
+fromOptionVersionConstraint: ">=22"
 icon: slack
 title: Slack Inviter
 
@@ -8,38 +12,7 @@ labels:
 - node
 - inviter
 
-options:
-- version: '1'
-  tag: 26-1.72.0
-  default: true
-
-endpoints:
-- name: slack-inviter
-  main: true
-  ports:
-  - name: http
-    number: 3000
-    protocol: http
-    main: true
-
 env:
-- name: NODE_PORT
-  value: '3000'
-- name: NODE_ENV
-  value: production
-  envType: prod
-- name: NODE_ENV
-  value: development
-  envType: dev
-- name: NODE_ENV
-  value: production
-  envType: staging
-- name: NODE_ENV
-  value: production
-  envType: test
-- name: NODE_ENV
-  value: production
-  envType: feature
 - name: PUBLIC_URL
   value: '{{service.primaryURL}}'
 - name: TURNSTILE_EXPECTED_HOSTNAME
@@ -132,32 +105,3 @@ build:
     repo: https://github.com/wodby/slack-inviter
     tag: 1.0.1
     default: true
-
-helm:
-  name: wodby
-  source: oci://registry-1.docker.io/wodby/node
-  chart: oci://registry-1.docker.io/wodby/node
-  version: 0.2.1
-  valueMappings:
-    serviceAccountName: serviceAccount.name
-    serviceAccountCreate: serviceAccount.create
-
-workloads:
-- name: main
-  selector:
-    matchLabels:
-      app.kubernetes.io/instance: '{{helm.release}}'
-  kind: deployment
-  primary: true
-  helm:
-    labels: podLabels
-    annotations: podAnnotations
-    volumes: extraVolumes
-  containers:
-  - name: node
-    image: wodby/node
-    build: true
-    helm:
-      resources: resources
-      env: envVars
-      mounts: extraVolumeMounts
