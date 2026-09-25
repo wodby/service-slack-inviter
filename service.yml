@@ -1,8 +1,8 @@
 name: slack-inviter
 type: service
 from: node
-fromVersion: "2.1.0"
-fromVersionConstraint: "^2.1.0"
+fromVersion: "2.0.1"
+fromVersionConstraint: "^2.0.0"
 fromOptionVersionConstraint: ">=22"
 icon: slack
 title: Slack Inviter
