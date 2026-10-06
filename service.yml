@@ -4,6 +4,7 @@ from: node
 fromVersion: "2.0.1"
 fromVersionConstraint: "^2.0.0"
 fromOptionVersionConstraint: ">=22"
+guidance: GUIDANCE.md
 icon: slack
 title: Slack Inviter
 
