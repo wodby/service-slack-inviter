@@ -108,3 +108,7 @@ build:
     repo: https://github.com/wodby/slack-inviter
     tag: 1.0.1
     default: true
+
+# Slack Inviter is a packaged application, not code to develop; do not inherit
+# development workspaces from the Node service.
+workspace: false
