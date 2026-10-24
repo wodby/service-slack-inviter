@@ -1,7 +1,7 @@
 name: slack-inviter
 type: service
 from: node
-fromVersion: "2.1.1"
+fromVersion: "2.1.2"
 fromVersionConstraint: "^2.0.0"
 fromOptionVersionConstraint: ">=22"
 guidance: GUIDANCE.md
