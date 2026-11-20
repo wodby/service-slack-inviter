@@ -1,7 +1,7 @@
 name: slack-inviter
 type: service
 from: node
-fromVersion: "2.3.1"
+fromVersion: "2.3.2"
 fromVersionConstraint: "^2.0.0"
 fromOptionVersionConstraint: ">=22"
 guidance: GUIDANCE.md
@@ -24,8 +24,7 @@ env:
 settings:
 - name: slack_team
   title: Slack workspace
-  description: Workspace subdomain only, for example community from 
-    community.slack.com
+  description: Workspace subdomain only, for example community from community.slack.com
   placeholder: community
   required: true
   var: SLACK_TEAM
@@ -39,8 +38,7 @@ settings:
   var: COMMUNITY_HEADLINE
 - name: community_description
   title: Community description
-  default: Join the community to ask questions, exchange ideas, and connect with
-    people on Slack.
+  default: Join the community to ask questions, exchange ideas, and connect with people on Slack.
   var: COMMUNITY_DESCRIPTION
 - name: community_website_url
   title: Community website URL
